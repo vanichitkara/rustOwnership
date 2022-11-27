@@ -48,15 +48,33 @@ fn main() {
 
     let mut myString = String::from("value");
 
-    let mut myString2 = String::from("");
+    let mut myString2 = String::from("something");
 
-    let mut result = myString + myString2; // two owned strings are concatenated
+    let mut result = myString + myString2; // two owned strings cannot be concatenated as the result variable is pointing to two different data in heap
 
-    let result2 = "Value" + String::from("something"); // &str(borrowed string) + owned string
+    let result2 = "Value" + String::from("something"); // &str(borrowed string) + owned string (cannot be concatenated as the left string is not growable)
     
-    let result3 = "Value" + "Something"; // &str(borrowed string) + &str(borrowed string)
+    let result3 = "Value"  + "Something"; // &str(borrowed string) + &str(borrowed string) (cannot be concatenated as the left string is not growable)
     
-    let result4 = String::from("Value") + "something"; // owned string + &str(borrowed string)
+    let result4 = String::from("Value") + "something"; // owned string + &str(borrowed string) (The only concatenation that is allowed in rust)
+
+    //For concatenation, the left part must be an owned string and the right part should be a borrowed string
+
+    let d = myString.clone();
+    println!("{:?}", myString); //valid now as myString variable is not deleted now.
+
+    //Tuples in Rust
+
+    let mytup = (1, 3, 5, true, String::from("Value"));
+    //tuple can store multiple data types together
+    let myT= mytup.1; // access the element at index 1 in tuple
+
+    let mut s = String::from("abc"); //need to declare s as mutable to push another string to it
+    s.push_str("def");
+
+    let mut r = "hello".to_string(); //converts r (borrowed string) to an owned string
+    let r = "abc".to_owned(); //converts r (borrowed string) to owned string
+    let s = String::from("value").as_str(); //converts s (owned string) to borrowed string
 
 }
 
